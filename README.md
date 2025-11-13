@@ -1,97 +1,211 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Foundation
 
-# Getting Started
+Foundation is a robust React Native starter template that combines TypeScript, NativeWind styling, and a suite of reusable UI primitives and context providers to accelerate the development of production-grade mobile applications. It features strict compiler settings, preconfigured tooling, and a growing collection of global UI utilities such as alerts, loaders, and snackbars.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Feature Highlights
 
-## Step 1: Start Metro
+- **Strict TypeScript Setup** - Enforces type safety with sensible defaults to catch issues early (`tsconfig.json`).
+- **NativeWind + TailwindCSS Styling** - Project-specific design tokens and a `cn` helper for composing utility classes (`global.css`, `tailwind.config.js`, `lib/utils.ts`).
+- **Reusable Global Components** - Button, AlertBox, SkeletonLoader, and Snackbar components (`src/components/globalComponents`).
+- **Context-Driven UI Services** - Alert, Loader, and Snackbar providers for consistent application feedback (`src/contexts`).
+- **Navigation Scaffolding** - Pre-built authentication and application stacks (`src/navigation`).
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Tech Stack
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- [React Native 0.82.1](https://reactnative.dev/) + [React 19](https://react.dev/)
+- [TypeScript 5](https://www.typescriptlang.org/)
+- [React Navigation 7](https://reactnavigation.org/) (Native Stack)
+- [NativeWind](https://www.nativewind.dev/) with TailwindCSS
+- UI Enhancements: `react-native-safe-area-context`, `react-native-linear-gradient`, `react-native-vector-icons`, `lucide-react-native`
+- Tooling: ESLint, Prettier, Jest
 
-```sh
-# Using npm
-npm start
+## Project Structure
 
-# OR using Yarn
-yarn start
+```
+Foundation/
+├── App.tsx                          # Main app entry point
+├── global.css                       # Global TailwindCSS styles
+├── lib/
+│   └── utils.ts                     # Utility functions (cn helper)
+├── src/
+│   ├── components/
+│   │   └── globalComponents/        # Reusable UI components
+│   │       ├── Alertbox.tsx
+│   │       ├── Button.tsx
+│   │       ├── SkeletonLoader.tsx
+│   │       └── Snackbar.tsx
+│   ├── contexts/                    # React Context providers
+│   │   ├── AlertContext.tsx
+│   │   ├── LoaderContext.tsx
+│   │   └── SnackbarContext.tsx
+│   └── navigation/                  # Navigation setup
+│       ├── AppStack.tsx
+│       ├── AuthStack.tsx
+│       └── RootNavigator.tsx
+├── screen/                          # Screen components
+│   ├── appScreens/
+│   └── authScreens/
+├── constant /                       # App constants
+│   ├── images.constant.ts
+│   └── screenNames.constant.ts
+├── hooks /                          # Custom React hooks
+│   └── useAppNavigation.hook.ts
+├── types/                           # TypeScript type definitions
+│   └── navigation.type.ts
+├── assets /                         # Static assets (images, icons)
+│   ├── icons/
+│   └── images/
+├── __tests__/                       # Test files
+├── android/                         # Android-specific code
+├── ios/                             # iOS-specific code
+├── tailwind.config.js               # TailwindCSS configuration
+├── tsconfig.json                    # TypeScript configuration
+├── babel.config.js                  # Babel configuration
+├── metro.config.js                  # Metro bundler config
+├── jest.config.js                   # Jest testing config
+├── .eslintrc.js                     # ESLint configuration
+└── .prettierrc.js                   # Prettier configuration
 ```
 
-## Step 2: Build and run your app
+## Getting Started
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Prerequisites
 
-### Android
+- Node.js **20+** (see `package.json` engines requirement)
+- Yarn, npm, or Bun for dependency management
+- Watchman (macOS) and Java 17+ for Android development
+- Xcode + CocoaPods for iOS builds (`bundle install`, `bundle exec pod install` inside `ios/`)
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### Installation
 
 ```sh
-bundle install
+# Clone repository, then install dependencies
+npm install
+# or
+yarn install
+# or
+bun install
 ```
 
-Then, and every time you update your native dependencies, run:
+### Running the App
+
+1. Start the Metro bundler:
+
+   ```sh
+   npm start
+   # or
+   yarn start
+   # or
+   bun start
+   ```
+
+2. Launch a platform build from a separate terminal:
+
+   ```sh
+   npm run android   # Android emulator or device
+   npm run ios       # iOS simulator (after CocoaPods install)
+   ```
+
+   Equivalent Yarn/Bun scripts are available (`yarn android`, `bun android`, etc.).
+
+## Available Scripts
+
+| Script | Description |
+| --- | --- |
+| `start` | Start the Metro development server |
+| `android` | Build and deploy the app to an Android device/emulator |
+| `ios` | Build and deploy the app to the iOS simulator |
+| `lint` | Run ESLint with the React Native config |
+| `test` | Execute the Jest test suite |
+
+Run scripts with the package manager of your choice (`npm run <script>`, `yarn <script>`, or `bun <script>`).
+
+## Styling Guidelines
+
+- Global Tailwind layers are registered in `global.css` and compiled via NativeWind. Components leverage Tailwind utility classes through the `className` prop (`App.tsx`).
+- Use the `cn` helper to merge conditional class names without conflicts (`lib/utils.ts`).
+- Custom color tokens and gradients are defined in `tailwind.config.js` and should be reused across components.
+
+## UI Service Providers
+
+- **AlertProvider** exposes `showAlert` for transient alert banners that render `AlertBox` overlays (`src/contexts/AlertContext.tsx`).
+- **LoaderProvider** supplies `showLoader` / `hideLoader` and renders skeleton screens using `SkeletonLoader` during blocking operations (`src/contexts/LoaderContext.tsx`).
+- **SnackbarProvider** offers convenience methods (`showError`, `showSuccess`, etc.) to surface transient messages at the bottom of the screen (`src/contexts/SnackbarContext.tsx`).
+
+Wrap your navigation root or screen hierarchy with these providers to enable consistent UX feedback.
+
+## Navigation
+
+`RootNavigator` composes the authentication and application stacks and is ready to host guarded routes. Populate `AppStack` and `AuthStack` with `Stack.Screen` entries as screens are implemented (`src/navigation`).
+
+## Testing & Quality
+
+- Run `npm test` (or the equivalent) to execute unit tests with Jest.
+- Use `npm run lint` to enforce the configured lint rules before committing changes.
+- Prettier is configured via `.prettierrc.js`; format files before pushing.
+
+## Configuration
+
+### Environment Variables
+
+The app uses the following configuration files:
+
+- **`app.json`** - React Native app configuration
+- **`babel.config.js`** - Babel transpilation settings
+- **`metro.config.js`** - Metro bundler configuration
+- **`jest.config.js`** - Testing framework setup
+
+### Assets Management
+
+- Place images in `assets/images/` and icons in `assets/icons/`
+- Update `constant/images.constant.ts` with new image references
+- Use the `declarations.d.ts` file for custom TypeScript declarations
+
+### Constants & Types
+
+- **Screen Names**: Define route names in `constant/screenNames.constant.ts`
+- **Navigation Types**: Type definitions in `types/navigation.type.ts`
+- **Custom Hooks**: Navigation utilities in `hooks/useAppNavigation.hook.ts`
+
+## Building for Production
+
+### Android Release Build
 
 ```sh
-bundle exec pod install
+cd android
+./gradlew assembleRelease
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### iOS Release Build
 
 ```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+cd ios
+bundle exec fastlane beta  # or archive for App Store
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Contributing
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Step 3: Modify your app
+### Development Guidelines
 
-Now that you have successfully run the app, let's make changes!
+- Follow the existing TypeScript and ESLint rules
+- Add tests for new features
+- Update documentation for API changes
+- Use conventional commit messages
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## License
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## Support
 
-## Congratulations! :tada:
+If you have any questions or need help:
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Create an issue on GitHub
+- Check the [React Native documentation](https://reactnative.dev/docs/getting-started)
+- Review [NativeWind documentation](https://www.nativewind.dev/) for styling questions
