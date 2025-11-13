@@ -1,5 +1,31 @@
 # Foundation
 
+React Native
+Expo
+Android Studio
+Xcode
+JavaScript
+TypeScript
+Node.js
+
+Backend & API:
+
+Node.js
+Django
+Firebase
+Supabase
+MongoDB
+PostgreSQL
+MySQL
+GraphQL
+
+🧪 Testing:
+
+Jest
+Postman
+
+DevOps / CI-CD:
+
 Foundation is a robust React Native starter template that combines TypeScript, NativeWind styling, and a suite of reusable UI primitives and context providers to accelerate the development of production-grade mobile applications. It features strict compiler settings, preconfigured tooling, and a growing collection of global UI utilities such as alerts, loaders, and snackbars.
 
 ## Feature Highlights
