@@ -1,3 +1,3 @@
-export type TRootStackParamList = {
-  Root: undefined;
-};
+// export type TRootStackParamList = {
+ 
+// };
